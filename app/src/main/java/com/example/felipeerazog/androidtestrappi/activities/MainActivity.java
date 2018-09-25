@@ -19,6 +19,9 @@ import android.widget.Toast;
 import com.example.felipeerazog.androidtestrappi.R;
 import com.example.felipeerazog.androidtestrappi.fragments.MovieFragment;
 import com.example.felipeerazog.androidtestrappi.adapters.SectionsPagerAdapter;
+import com.example.felipeerazog.androidtestrappi.fragments.PopularFragment;
+import com.example.felipeerazog.androidtestrappi.fragments.TopRatedFragment;
+import com.example.felipeerazog.androidtestrappi.fragments.UpcomingFragment;
 
 import javax.inject.Inject;
 
@@ -60,10 +63,16 @@ public class MainActivity extends AppCompatActivity  implements HasSupportFragme
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
+        mSectionsPagerAdapter.addFragment(new PopularFragment(), "Popular");
+        mSectionsPagerAdapter.addFragment(new TopRatedFragment(), "Top Rated");
+        mSectionsPagerAdapter.addFragment(new UpcomingFragment(), "Upcoming");
+
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+
+        /*TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +82,7 @@ public class MainActivity extends AppCompatActivity  implements HasSupportFragme
         });
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +102,7 @@ public class MainActivity extends AppCompatActivity  implements HasSupportFragme
         AndroidInjection.inject(this);
     }
 
-    private void showFragment(Bundle savedInstanceState){
+    /*private void showFragment(Bundle savedInstanceState){
         if (savedInstanceState == null) {
 
             MovieFragment fragment = new MovieFragment();
@@ -106,7 +115,7 @@ public class MainActivity extends AppCompatActivity  implements HasSupportFragme
                     .add(R.id.container, fragment, null)
                     .commit();
         }
-    }
+    }*/
 
 
     @Override

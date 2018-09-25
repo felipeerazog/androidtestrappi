@@ -5,8 +5,10 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @Entity
-public class Movie {
+public class Movie implements Serializable{
 
     @PrimaryKey
     @SerializedName("id")
