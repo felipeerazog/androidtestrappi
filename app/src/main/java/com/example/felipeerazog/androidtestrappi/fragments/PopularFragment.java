@@ -2,7 +2,10 @@ package com.example.felipeerazog.androidtestrappi.fragments;
 
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -86,7 +89,8 @@ public class PopularFragment extends Fragment{
 
     private void configureViewModel(){
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
-        viewModel.init(CATEGORY);
+
+        viewModel.init(CATEGORY, getContext());
         viewModel.getMovies().observe(this, movies -> updateUI(movies));
     }
 

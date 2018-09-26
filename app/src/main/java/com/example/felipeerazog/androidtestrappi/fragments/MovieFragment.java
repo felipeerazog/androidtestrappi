@@ -83,7 +83,7 @@ public class MovieFragment extends Fragment {
     private void configureViewModel(){
         String category = getArguments().getString(CATEGORY_KEY);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
-        viewModel.init(category);
+        viewModel.init(category, getContext());
         viewModel.getMovies().observe(this, movies -> updateUI(movies));
     }
 

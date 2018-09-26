@@ -1,6 +1,9 @@
 package com.example.felipeerazog.androidtestrappi.repositories;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,7 +40,7 @@ public class MovieRepository {
     // ---
 
     public LiveData<List<Movie>> getMovies(String category) {
-        refreshMovies(category); // try to refresh data if possible from Github Api
+        refreshMovies(category);
         return movieDao.load(category); // return a LiveData directly from the database.
     }
 
@@ -45,29 +48,22 @@ public class MovieRepository {
 
     private void refreshMovies(final String category) {
         executor.execute(() -> {
-            // Check if user was fetched recently
-            //boolean userExists = (movieDao.hasUser(userLogin, getMaxRefreshTime(new Date())) != null);
-            boolean internetAvailable = false;
-            // If user have to be updated
-            if (!internetAvailable) {
-                movieService.loadPopularList(category, API_KEY).enqueue(new Callback<MovieListInfo>() {
-                    @Override
-                    public void onResponse(Call<MovieListInfo> call, Response<MovieListInfo> response) {
-                        Log.e("TAG", "DATA REFRESHED FROM NETWORK");
-                        Toast.makeText(App.context, "Data refreshed from network", Toast.LENGTH_LONG).show();
-                        executor.execute(() -> {
-                            MovieListInfo movieListInfo = response.body();
-                            for (Movie movie : movieListInfo.getMovies()) {
-                                movie.setCategory(category);
-                                movieDao.save(movie);
-                            }
-                        });
-                    }
+            movieService.loadPopularList(category, API_KEY).enqueue(new Callback<MovieListInfo>() {
+                @Override
+                public void onResponse(Call<MovieListInfo> call, Response<MovieListInfo> response) {
+                    Toast.makeText(App.context, "Data online", Toast.LENGTH_SHORT).show();
+                    executor.execute(() -> {
+                        MovieListInfo movieListInfo = response.body();
+                        for (Movie movie : movieListInfo.getMovies()) {
+                            movie.setCategory(category);
+                            movieDao.save(movie);
+                        }
+                    });
+                }
 
-                    @Override
-                    public void onFailure(Call<MovieListInfo> call, Throwable t) { }
-                });
-            }
+                @Override
+                public void onFailure(Call<MovieListInfo> call, Throwable t) { }
+            });
         });
     }
 

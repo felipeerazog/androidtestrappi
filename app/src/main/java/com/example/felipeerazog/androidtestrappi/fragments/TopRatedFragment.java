@@ -65,7 +65,7 @@ public class TopRatedFragment extends Fragment {
 
     private void configureViewModel(){
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
-        viewModel.init(CATEGORY);
+        viewModel.init(CATEGORY, getContext());
         viewModel.getMovies().observe(this, movies -> updateUI(movies));
     }
 
