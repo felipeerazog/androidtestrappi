@@ -1,12 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.felipeerazog.androidtestrappi.fragments.TopRatedFragment">
+    tools:context="com.example.felipeerazog.androidtestrappi.fragments.TopRatedFragment"
+    android:orientation="vertical">
+
+    <SearchView
+        android:id="@+id/search_toprated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_hint"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toprated_list"></ListView>
 
-</RelativeLayout>
+</LinearLayout>

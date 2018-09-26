@@ -72,6 +72,12 @@ public class MainActivity extends AppCompatActivity  implements HasSupportFragme
         tabLayout.setupWithViewPager(mViewPager);
 
 
+
+
+
+
+
+
         /*TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         tabLayout.setOnClickListener(new View.OnClickListener() {

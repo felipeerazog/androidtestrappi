@@ -9,11 +9,15 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.felipeerazog.androidtestrappi.R;
 import com.example.felipeerazog.androidtestrappi.activities.DetailActivity;
@@ -40,7 +44,12 @@ public class PopularFragment extends Fragment{
     @BindView(R.id.popular_list)
     ListView moviesList;
 
+    @BindView(R.id.search_popular)
+    SearchView search;
+
     private static final String CATEGORY = "popular";
+
+    MovieListViewAdapter movieListViewAdapter;
 
     public PopularFragment() {
 
@@ -49,6 +58,7 @@ public class PopularFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -56,6 +66,20 @@ public class PopularFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_popular, container, false);
         ButterKnife.bind(this, view);
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                movieListViewAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
         return view;
     }
 
@@ -104,7 +128,7 @@ public class PopularFragment extends Fragment{
             //Glide.with(this).load(user.getAvatar_url()).apply(RequestOptions.circleCropTransform()).into(imageView);
 
             Movie[] array = movies.toArray(new Movie[movies.size()]);
-            MovieListViewAdapter movieListViewAdapter = new MovieListViewAdapter(this.getContext(), array);
+            movieListViewAdapter = new MovieListViewAdapter(this.getContext(), array);
             moviesList.setAdapter(movieListViewAdapter);
             moviesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
