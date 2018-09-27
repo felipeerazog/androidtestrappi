@@ -20,6 +20,18 @@ public class Movie implements Serializable{
     @SerializedName("overview")
     private String overview;
 
+    @SerializedName("release_date")
+    private
+    String releaseDate;
+
+    @SerializedName("vote_average")
+    private
+    double voteAverage;
+
+    @SerializedName("poster_path")
+    private
+    String poster_path;
+
     private String category;
 
     public String getTitle() {
@@ -52,5 +64,29 @@ public class Movie implements Serializable{
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(double popularity) {
+        this.voteAverage = popularity;
+    }
+
+    public String getPoster_path() {
+        return poster_path;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 }

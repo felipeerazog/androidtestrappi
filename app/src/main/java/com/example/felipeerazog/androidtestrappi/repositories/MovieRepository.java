@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.widget.Toast;
 

@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.felipeerazog.androidtestrappi.R;
 import com.example.felipeerazog.androidtestrappi.database.entities.Movie;
 
@@ -14,11 +18,22 @@ import butterknife.ButterKnife;
 
 public class DetailActivity extends AppCompatActivity {
 
+    private String IMG_FOLDER_URL = "https://image.tmdb.org/t/p/w500/";
+
     @BindView(R.id.detail_title)
     TextView title;
 
     @BindView(R.id.detail_overview)
     TextView overview;
+
+    @BindView(R.id.release_date)
+    TextView releaseDate;
+
+    @BindView(R.id.vote_average)
+    RatingBar voteAverage;
+
+    @BindView(R.id.poster)
+    ImageView poster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,5 +46,10 @@ public class DetailActivity extends AppCompatActivity {
 
         title.setText(movie.getTitle());
         overview.setText(movie.getOverview());
+        releaseDate.setText(movie.getReleaseDate());
+        voteAverage.setRating((float)movie.getVoteAverage());
+        voteAverage.setEnabled(false);
+        Glide.with(this).load(IMG_FOLDER_URL + movie.getPoster_path()).into(poster);
+
     }
 }
