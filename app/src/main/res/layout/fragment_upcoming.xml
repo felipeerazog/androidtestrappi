@@ -14,5 +14,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/upcoming_list"></ListView>
+        android:id="@+id/upcoming_list"
+        android:divider="@null"
+        android:dividerHeight="0dp"></ListView>
 </LinearLayout>

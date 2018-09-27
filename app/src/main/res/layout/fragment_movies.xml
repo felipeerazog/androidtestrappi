@@ -9,6 +9,8 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/movies_list"></ListView>
+        android:id="@+id/movies_list"
+        android:divider="@null"
+        android:dividerHeight="0dp"></ListView>
 
 </LinearLayout>
