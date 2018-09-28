@@ -10,8 +10,9 @@ import dagger.android.ContributesAndroidInjector;
 
 @Module
 public abstract class FragmentModule {
-    @ContributesAndroidInjector
-    abstract MovieFragment contributeMovieFragment();
+
+    /*@ContributesAndroidInjector
+    abstract MovieFragment contributeMovieFragment();*/
 
     @ContributesAndroidInjector
     abstract PopularFragment contributePopularFragment();

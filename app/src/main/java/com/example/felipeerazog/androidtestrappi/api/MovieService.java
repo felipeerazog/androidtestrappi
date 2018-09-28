@@ -12,6 +12,4 @@ public interface MovieService {
     @GET("movie/{category}/")
     Call<MovieListInfo> loadPopularList(@Path("category") String category, @Query("api_key") String apiKey);
 
-
-
 }

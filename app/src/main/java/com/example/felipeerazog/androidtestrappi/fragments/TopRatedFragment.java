@@ -28,12 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class TopRatedFragment extends Fragment {
-
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
-
-    private MovieViewModel viewModel;
+public class TopRatedFragment extends MovieFragment {
 
     @BindView(R.id.toprated_list)
     ListView moviesList;
@@ -41,17 +36,8 @@ public class TopRatedFragment extends Fragment {
     @BindView(R.id.search_toprated)
     SearchView search;
 
-    private static final String CATEGORY = "top_rated";
-
-    MovieListViewAdapter movieListViewAdapter;
-
     public TopRatedFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        CATEGORY = "top_rated";
     }
 
     @Override
@@ -60,42 +46,15 @@ public class TopRatedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_toprated, container, false);
         ButterKnife.bind(this, view);
 
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                movieListViewAdapter.getFilter().filter(s);
-                return false;
-            }
-        });
-
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.configureDagger();
-        this.configureViewModel();
-    }
+    protected void updateUI(@Nullable List<Movie> movies){
+        super.updateUI(movies);
+        if (movies != null && !movies.isEmpty() && movieListViewAdapter == null){
 
-    private void configureDagger(){
-        AndroidSupportInjection.inject(this);
-    }
-
-    private void configureViewModel(){
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
-        viewModel.init(CATEGORY, getContext());
-        viewModel.getMovies().observe(this, movies -> updateUI(movies));
-    }
-
-    private void updateUI(@Nullable List<Movie> movies){
-        if (movies != null && !movies.isEmpty()){
             Movie[] array = movies.toArray(new Movie[movies.size()]);
+
             movieListViewAdapter = new MovieListViewAdapter(this.getContext(), array);
             moviesList.setAdapter(movieListViewAdapter);
             moviesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -104,6 +63,19 @@ public class TopRatedFragment extends Fragment {
                     Intent intent = new Intent(getContext(), DetailActivity.class);
                     intent.putExtra("movie", (Serializable) array[i]);
                     startActivity(intent);
+                }
+            });
+
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    movieListViewAdapter.getFilter().filter(s);
+                    return false;
                 }
             });
         }

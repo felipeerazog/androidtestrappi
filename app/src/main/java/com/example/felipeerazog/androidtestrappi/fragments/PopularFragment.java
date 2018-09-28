@@ -34,12 +34,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
-public class PopularFragment extends Fragment{
-
-    @Inject
-    ViewModelProvider.Factory viewModelFactory;
-
-    private MovieViewModel viewModel;
+public class PopularFragment extends MovieFragment{
 
     @BindView(R.id.popular_list)
     ListView moviesList;
@@ -47,18 +42,8 @@ public class PopularFragment extends Fragment{
     @BindView(R.id.search_popular)
     SearchView search;
 
-    private static final String CATEGORY = "popular";
-
-    MovieListViewAdapter movieListViewAdapter;
-
     public PopularFragment() {
-
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+        CATEGORY = "popular";
     }
 
     @Override
@@ -66,68 +51,15 @@ public class PopularFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_popular, container, false);
         ButterKnife.bind(this, view);
-
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                movieListViewAdapter.getFilter().filter(s);
-                return false;
-            }
-        });
-
         return view;
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.configureDagger();
-        this.configureViewModel();
-    }
-
-    /**
-     * Returns a new instance of this fragment for the given section
-     * number.
-     */
-    /*public static PopularFragment newInstance(int sectionNumber, String category) {
-        MovieFragment fragment = new MovieFragment();
-        Bundle args = new Bundle();
-        args.putInt(SECTION_NUMBER_KEY, sectionNumber);
-        args.putString(CATEGORY_KEY, category);
-        fragment.setArguments(args);
-        return fragment;
-    }*/
-
-    // -----------------
-    // CONFIGURATION
-    // -----------------
-
-    private void configureDagger(){
-        AndroidSupportInjection.inject(this);
-    }
-
-    private void configureViewModel(){
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(MovieViewModel.class);
-
-        viewModel.init(CATEGORY, getContext());
-        viewModel.getMovies().observe(this, movies -> updateUI(movies));
-    }
-
-    // -----------------
-    // UPDATE UI
-    // -----------------
-
-
-    private void updateUI(@Nullable List<Movie> movies){
-        if (movies != null && !movies.isEmpty()){
-            //Glide.with(this).load(user.getAvatar_url()).apply(RequestOptions.circleCropTransform()).into(imageView);
+    protected void updateUI(@Nullable List<Movie> movies){
+        super.updateUI(movies);
+        if (movies != null && !movies.isEmpty() && movieListViewAdapter == null){
 
             Movie[] array = movies.toArray(new Movie[movies.size()]);
+
             movieListViewAdapter = new MovieListViewAdapter(this.getContext(), array);
             moviesList.setAdapter(movieListViewAdapter);
             moviesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -138,6 +70,20 @@ public class PopularFragment extends Fragment{
                     startActivity(intent);
                 }
             });
+
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    movieListViewAdapter.getFilter().filter(s);
+                    return false;
+                }
+            });
         }
     }
+
 }

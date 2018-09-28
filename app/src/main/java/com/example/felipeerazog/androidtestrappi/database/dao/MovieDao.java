@@ -19,9 +19,5 @@ public interface MovieDao {
 
     @Query("SELECT * FROM movie WHERE category = :category")
     LiveData<List<Movie>> load(String category);
-    //LiveData<ArrayList<Movie>> load(String category);
-
-    /*@Query("SELECT * FROM movie WHERE id = :id LIMIT 1")
-    Movie hasMovie(int id);*/
 
 }

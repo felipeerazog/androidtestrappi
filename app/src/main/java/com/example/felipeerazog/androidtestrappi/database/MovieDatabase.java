@@ -9,9 +9,8 @@ import com.example.felipeerazog.androidtestrappi.database.entities.Movie;
 @Database(entities = {Movie.class}, version = 1)
 public abstract class MovieDatabase extends RoomDatabase {
 
-    // --- SINGLETON ---
     private static volatile MovieDatabase INSTANCE;
 
-    // --- DAO ---
     public abstract MovieDao movieDao();
+
 }

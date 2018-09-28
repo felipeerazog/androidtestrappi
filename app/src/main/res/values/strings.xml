@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">AndroidTestRappi</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="app_name">Android Test Rappi</string>
+    <string name="detail_activity">Movie Details</string>
+
     <string name="tab_text_popular">Popular</string>
     <string name="tab_text_top_rated">Top Rated</string>
     <string name="tab_text_upcoming">Upcoming</string>

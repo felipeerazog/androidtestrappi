@@ -23,11 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module(includes = ViewModelModule.class)
 public class AppModule {
 
-    // --- DATABASE INJECTION ---
-
     @Provides
     @Singleton
-    MovieDatabase provideDatabase(Application application) {
+    public MovieDatabase provideDatabase(Application application) {
         return Room.databaseBuilder(application,
                 MovieDatabase.class, "MyDatabase.db")
                 .build();
@@ -35,30 +33,30 @@ public class AppModule {
 
     @Provides
     @Singleton
-    MovieDao provideMovieDao(MovieDatabase database) { return database.movieDao(); }
-
-    // --- REPOSITORY INJECTION ---
+    public MovieDao provideMovieDao(MovieDatabase database) {
+        return database.movieDao();
+    }
 
     @Provides
-    Executor provideExecutor() {
+    public Executor provideExecutor() {
         return Executors.newSingleThreadExecutor();
     }
 
     @Provides
     @Singleton
-    MovieRepository provideMovieRepository(MovieService movieService, MovieDao movieDao, Executor executor) {
+    public MovieRepository provideMovieRepository(MovieService movieService, MovieDao movieDao, Executor executor) {
         return new MovieRepository(movieService, movieDao, executor);
     }
-
-    // --- NETWORK INJECTION ---
 
     private static String BASE_URL = "https://api.themoviedb.org/3/";
 
     @Provides
-    Gson provideGson() { return new GsonBuilder().create(); }
+    public Gson provideGson() {
+        return new GsonBuilder().create();
+    }
 
     @Provides
-    Retrofit provideRetrofit(Gson gson) {
+    public Retrofit provideRetrofit(Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl(BASE_URL)
@@ -68,7 +66,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    MovieService provideApiWebservice(Retrofit restAdapter) {
+    public MovieService provideApiWebservice(Retrofit restAdapter) {
         return restAdapter.create(MovieService.class);
     }
 }

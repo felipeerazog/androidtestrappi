@@ -33,19 +33,16 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> implements Filtera
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
         return movies.length;
     }
 
     @Override
     public Movie getItem(int pos) {
-        // TODO Auto-generated method stub
         return movies[pos];
     }
 
     @Override
     public long getItemId(int pos) {
-        // TODO Auto-generated method stub
         return movies[pos].getId();
     }
 
@@ -65,7 +62,6 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> implements Filtera
 
     @Override
     public Filter getFilter() {
-        // TODO Auto-generated method stub
         if(filter == null)
         {
             filter=new CustomFilter();
@@ -107,6 +103,5 @@ public class MovieListViewAdapter extends ArrayAdapter<Movie> implements Filtera
         }
 
     }
-
 
 }
