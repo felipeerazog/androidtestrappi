@@ -54,3 +54,17 @@ MovieDatabase | Para conectarse y crear estructuras en base de datos
 MovieDao| Accede hasta la tabla de películas para ingresar nuevos registros y consultarlos
 MovieListInfo| Encapsula la información de la lista y las películas
 Movie| Encapsula la información de una película
+
+# En qué consiste el principio de responsabilidad única? Cuál es su propósito?
+Cada clase se debe dedicar a hacer solo una cosa dentro de la aplicación y de forma aislada. En una buena arquitectura, la clase que atiende los eventos que se disparan desde la UI no accede a las reglas del negocio, ni mucho menos accede hasta la base de datos. Las ventajas de mantener una única responsabilidad son:
+- Los componentes son más sencillos, lo que los hace más reutilizables.
+- Las pruebas unitarias son más sencillas de aplicar.
+- Al realizar un cambio en el código, las demás funcionalidades no deberían verse afectadas.
+- No cuesta mucho trabajo agregarle funciones nuevas, porque no está muy involucrada con otras clases.
+
+# Qué características tiene, según su opinión, un “buen” código o código limpio?
+- Se usan nombres de clases, propiedades y métodos claros y coherentes a los que hacen. No se ahorran palabras al momento de nombre entidades. Al momento de leer el código no cuesta trabajo entenderlo.
+- Se tiene un estándar claro y bien definido para nombrar, identar y organizar el código.
+- Siempre que un procedimiento se tiene que reutilizar, se vuelve una función.
+- Las funciones no llevan más de 2 parámetros de atributos relacionados entre sí, es mejor encapsularlos todos en un objeto.
+- No está lleno de comentarios, un par de líneas que describan el "qué hace" y no el "cómo lo hace" es suficiente si cada cosa va en su lugar (principio de responsabilidad única) y el código es fácil de leer (buen uso de nombres)
